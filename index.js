@@ -1,19 +1,21 @@
 import express from "express";
-import { PORT, mongoDBURL } from "./config.js";
 import mongoose from "mongoose";
 import bookRoute from './routes/booksRoutes.js';
 import cors from 'cors';
+import * as dotenv from 'dotenv';
+
+dotenv.config();
 
 const app = express();
 
 // mongo connection
 mongoose
-  .connect(mongoDBURL)
+  .connect(process.env.mongoDBURL)
   .then(() => {
     console.log("Connection to database is succsessfull!");
     // server
-    app.listen(PORT, () => {
-      console.log(`Server rodando na porta:${PORT}`);
+    app.listen(process.env.PORT, () => {
+      console.log(`Server rodando na porta:${process.env.PORT}`);
     });
   })
   .catch((error) => {
